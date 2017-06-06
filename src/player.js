@@ -24,7 +24,7 @@ class Store {
 };
 
 let person = {
-    health: 100
+    health: 120
 };
 const reducer = (state,action) => {
     switch (action.type){
