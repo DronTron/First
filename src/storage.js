@@ -36,7 +36,20 @@ class Store {
         });
     };
 };
-let store = new Store(count, change);
+class StoreWidthHistory extends Store {
+    constructor(inition_state, change){
+        super(inition_state, change);
+        this.history = [];
+    }
+
+    dispatch(action) {
+        let new_state = this.change(this.state, action);
+        this.history.push(this.state)
+        this.state = new_state;
+        this.call();        
+    };
+}
+let store = new StoreWidthHistory(count, change);
 const act1 = {
     type:"INCREASE",
     value: 1
@@ -47,6 +60,9 @@ const act2 = {
 }
 
 let val1 = store.subcribe(() => console.log("First", store.state));
-let val2 = store.subcribe(() => console.log("Second", store.state));
+let val2 = store.subcribe(() => console.log("Second", store.history));
 store.dispatch(act1);
+store.dispatch(act1);
+store.dispatch(act1);
+store.dispatch(act2);
 val2();
